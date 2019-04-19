@@ -6,25 +6,28 @@ class USMap extends Component {
   loadMap() {
     d3.json('https://cdn.jsdelivr.net/npm/us-atlas@2/us/states-10m.json')
       .then(mapData => {
-        const geoData = topojsonFeature(mapData, mapData.objects.states).features
-        this.displayMap(geoData)
+        const geoDataObj = topojsonFeature(mapData, mapData.objects.states)
+        this.displayMap(geoDataObj)
       })
       .catch(err => {
         throw err
       })
   }
-  displayMap(data) {
-    const width = 960
-    const height = 600
+  displayMap(geoDataObj) {
+    const width = 720
+    const height = 450
     
-    const path = d3.geoPath()
+    const projection = d3.geoIdentity()
+                          .fitSize([width, height], geoDataObj)
+
+    const path = d3.geoPath().projection(projection)
     console.log(path)
 
     d3.select('svg')
           .attr('width', width)
           .attr('height', height)
         .selectAll('.states')
-        .data(data)
+        .data(geoDataObj.features)
         .enter()
           .append('path')
           .classed('state', true)
