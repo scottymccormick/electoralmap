@@ -209,6 +209,13 @@ const testStateData = [
 ]
 
 class USMap extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      year: 2016
+    }
+  }
   loadData() {
 
     const promises = []
@@ -276,15 +283,22 @@ class USMap extends Component {
         return scale(data)
       })
   }
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
   componentDidMount() {
     this.loadData()
-    // this.loadMap()
   }
   render() {
-    console.log(testStateData)
+    console.log(this.state)
     return (
       <div>
         <h3>US Map</h3>
+        <section>
+          <input type="range" name="year" id="year-slider" min="1790" max="2016" step="2" onChange={this.handleChange}/>
+        </section>
         <svg 
           version="1.1"
           baseProfile="full"
