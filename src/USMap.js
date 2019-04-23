@@ -209,6 +209,19 @@ const testStateData = [
 ]
 
 class USMap extends Component {
+  loadData() {
+
+    const promises = []
+    promises.push(d3.csv(`${process.env.PUBLIC_URL}/data/collegebyyear.csv`))
+    promises.push(d3.csv(`${process.env.PUBLIC_URL}/data/censusbyyear.csv`))
+
+    Promise.all(promises).then(([collegeData, censusData]) => {
+      console.log('college data', collegeData)
+      console.log('census data', censusData)
+    })
+
+    this.loadMap()
+  }
   loadMap() {
     d3.json('https://cdn.jsdelivr.net/npm/us-atlas@2/us/states-10m.json')
       .then(mapData => {
@@ -264,7 +277,8 @@ class USMap extends Component {
       })
   }
   componentDidMount() {
-    this.loadMap()
+    this.loadData()
+    // this.loadMap()
   }
   render() {
     console.log(testStateData)
