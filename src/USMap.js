@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {feature as topojsonFeature} from 'topojson'
 import * as d3 from 'd3'
+import YearPicker from './YearPicker';
 
 const testStateData = [
   {
@@ -296,9 +297,7 @@ class USMap extends Component {
     return (
       <div>
         <h3>US Map</h3>
-        <section>
-          <input type="range" name="year" id="year-slider" min="1790" max="2016" step="2" onChange={this.handleChange}/>
-        </section>
+        <YearPicker handleChange={this.handleChange} />
         <svg 
           version="1.1"
           baseProfile="full"
