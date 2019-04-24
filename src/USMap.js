@@ -214,7 +214,9 @@ class USMap extends Component {
     super()
 
     this.state = {
-      year: 2016
+      year: 2016,
+      censusData: [],
+      collegeData: []
     }
   }
   loadData() {
@@ -223,12 +225,31 @@ class USMap extends Component {
     promises.push(d3.csv(`${process.env.PUBLIC_URL}/data/collegebyyear.csv`))
     promises.push(d3.csv(`${process.env.PUBLIC_URL}/data/censusbyyear.csv`))
 
-    Promise.all(promises).then(([collegeData, censusData]) => {
-      console.log('college data', collegeData)
-      console.log('census data', censusData)
+    Promise.all(promises)
+      .then(([collegeData, censusData]) => {
+        this.setState({
+          censusData,
+          collegeData
+        })
+      })
+      .then(() => {
+        this.loadMap()
+      })
+  }
+  getData() {
+    const collegeYear = this.state.collegeData.find(row => {
+      const year = +row["Year"]
+
+      return year === this.state.year || 
+        (Math.abs(year - this.state.year) <= 2 && year < this.state.year)
     })
 
-    this.loadMap()
+    const censusYear = this.state.censusData.find(row => {
+      const year = +row["Year"]
+
+      return year === this.state.year
+    })
+    return [collegeYear, censusYear]
   }
   loadMap() {
     d3.json('https://cdn.jsdelivr.net/npm/us-atlas@2/us/states-10m.json')
@@ -271,6 +292,9 @@ class USMap extends Component {
   }
   setColor() {
 
+    const [ collegeYear, censusYear ] = this.getData()
+    console.log(collegeYear, censusYear)
+
     const colorRange = ['white', 'blue']
 
     const scale = d3.scaleLinear()
@@ -284,10 +308,11 @@ class USMap extends Component {
         return scale(data)
       })
   }
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
+  handleChange = async e => {
+    await this.setState({
+      [e.target.name]: +e.target.value
     })
+    this.setColor()
   }
   componentDidMount() {
     this.loadData()
