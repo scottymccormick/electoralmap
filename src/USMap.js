@@ -264,6 +264,7 @@ class USMap extends Component {
           collegeData
         })
       })
+      .then(() => this.refreshScores())
       .then(() => {
         this.loadMap()
       })
@@ -283,11 +284,15 @@ class USMap extends Component {
     d3.json('https://cdn.jsdelivr.net/npm/us-atlas@2/us/states-10m.json')
       .then(mapData => {
         const geoDataObj = topojsonFeature(mapData, mapData.objects.states)
-        
-        testStateData.forEach(row => {
+
+        this.state.strengthScores.forEach(row => {
           const states =  geoDataObj.features.filter(d => d.properties.name === row.name)
           states.forEach(state => state.properties = row)
         })
+        // testStateData.forEach(row => {
+        //   const states =  geoDataObj.features.filter(d => d.properties.name === row.name)
+        //   states.forEach(state => state.properties = row)
+        // })
         this.displayMap(geoDataObj)
       })
       .catch(err => {
@@ -342,27 +347,32 @@ class USMap extends Component {
   }
   async setColor () {
 
-    const [ collegeYear, censusYear ] =  await this.getData()
-
-    const strengthScores = this.getScores(collegeYear, censusYear)
-
-    const colorRange = ['white', 'blue']
-
+    const colorRange = ['white', 'red']
+    const colorDomain = d3.extent(this.state.strengthScores.map(state => state.score))
     const scale = d3.scaleLinear()
-                    .domain([0, d3.max(testStateData.map(state => state.population))])
+                    .domain([0.5, 2])
                     .range(colorRange)
 
     d3.selectAll('.state')
       .transition()
       .style('fill', d => {
-        const data = d.properties.population
+        const data = d.properties.score
         return scale(data)
       })
+  }
+  async refreshScores() {
+    const [ collegeYear, censusYear ] =  await this.getData()
+
+    await this.setState({
+      strengthScores: this.getScores(collegeYear, censusYear)
+    })
+    console.log('recalculated')
   }
   handleChange = async e => {
     await this.setState({
       [e.target.name]: +e.target.value
     })
+    await this.refreshScores()
     this.setColor()
   }
   componentDidMount() {
