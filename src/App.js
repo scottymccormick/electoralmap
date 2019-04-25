@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import USMap from './USMap';
+import MapArea from './MapArea';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <USMap />
+        <MapArea />
       </div>
     );
   }

@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-// import {feature as topojsonFeature} from 'topojson'
 import * as d3 from 'd3'
 import YearPicker from './YearPicker';
-// import topoStates from './states'
 import CountryMap from './CountryMap';
+import ColorScale from './ColorScale';
 
-class USMap extends Component {
+class MapArea extends Component {
   constructor() {
     super()
 
@@ -125,10 +124,11 @@ class USMap extends Component {
       <div>
         <h3>US Map</h3>
         <YearPicker handleChange={this.handleChange} />
+        <ColorScale />
         <CountryMap strengthScores={this.state.strengthScores}  />
       </div>
     )
   }
 }
 
-export default USMap
+export default MapArea

@@ -31,7 +31,7 @@ const CountryMap = props => {
         .attr('d', path)
 
   const scale = d3.scaleLinear()
-                  .domain([0.5, 1, 3])
+                  .domain([0.5, 1, 2])
                   .range(['red', '#FFFDE9', 'blue'])
 
   d3.selectAll('.state')
@@ -44,7 +44,6 @@ const CountryMap = props => {
 
   return (
     <div>
-      <h2>test</h2>
       <svg 
         version="1.1"
         baseProfile="full"

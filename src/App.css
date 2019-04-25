@@ -21,3 +21,37 @@ datalist {
   justify-content: space-between;
   width: 620px;
 }
+
+.color-scale-container {
+  position: relative;
+  top: 100px;
+  left: 100px;
+  width: 100px;
+}
+
+.color-scale-container h5 {
+  position: absolute;
+  top: -60px;
+  left: -40px;
+  font-size: 1em;
+}
+
+.color-scale {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200px;
+  width: 20px;
+  background: linear-gradient(red, #FFFDE9, blue)
+}
+
+.color-scale ul {
+  list-style: none;
+  display: flex;
+  height: 100%;
+  margin-top: 0;
+  padding-left: 0;
+  margin-left: 30px;
+  flex-direction: column;
+  justify-content: space-between;
+}
