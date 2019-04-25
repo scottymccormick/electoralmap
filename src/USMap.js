@@ -2,212 +2,7 @@ import React, { Component } from 'react'
 import {feature as topojsonFeature} from 'topojson'
 import * as d3 from 'd3'
 import YearPicker from './YearPicker';
-
-const testStateData = [
-  {
-    name: "Alabama", 
-    population: 4779736
-  },
-  {
-    name: "Alaska", 
-    population: 710231
-  },
-  {
-    name: "Arizona", 
-    population: 6392017
-  },
-  {
-    name: "Arkansas", 
-    population: 2915918
-  },
-  {
-    name: "California", 
-    population: 37253956
-  },
-  {
-    name: "Colorado", 
-    population: 5029196
-  },
-  {
-    name: "Connecticut", 
-    population: 3574097
-  },
-  {
-    name: "Delaware", 
-    population: 897934
-  },
-  {
-    name: "District of Columbia", 
-    population: 601723
-  },
-  {
-    name: "Florida", 
-    population: 18801310
-  },
-  {
-    name: "Georgia", 
-    population: 9687653
-  },
-  {
-    name: "Hawaii", 
-    population: 1360301
-  },
-  {
-    name: "Idaho", 
-    population: 1567582
-  },
-  {
-    name: "Illinois", 
-    population: 12830632
-  },
-  {
-    name: "Indiana", 
-    population: 6483802
-  },
-  {
-    name: "Iowa", 
-    population: 3046355
-  },
-  {
-    name: "Kansas", 
-    population: 2853118
-  },
-  {
-    name: "Kentucky", 
-    population: 4339367
-  },
-  {
-    name: "Louisiana", 
-    population: 4533372
-  },
-  {
-    name: "Maine", 
-    population: 1328361
-  },
-  {
-    name: "Maryland", 
-    population: 5773552
-  },
-  {
-    name: "Massachusetts", 
-    population: 6547629
-  },
-  {
-    name: "Michigan", 
-    population: 9883640
-  },
-  {
-    name: "Minnesota", 
-    population: 5303925
-  },
-  {
-    name: "Mississippi", 
-    population: 2967297
-  },
-  {
-    name: "Missouri", 
-    population: 5988927
-  },
-  {
-    name: "Montana", 
-    population: 989415
-  },
-  {
-    name: "Nebraska", 
-    population: 1826341
-  },
-  {
-    name: "Nevada", 
-    population: 2700551
-  },
-  {
-    name: "New Hampshire", 
-    population: 1316470
-  },
-  {
-    name: "New Jersey", 
-    population: 8791894
-  },
-  {
-    name: "New Mexico", 
-    population: 2059179
-  },
-  {
-    name: "New York", 
-    population: 19378102
-  },
-  {
-    name: "North Carolina", 
-    population: 9535483
-  },
-  {
-    name: "North Dakota", 
-    population: 672591
-  },
-  {
-    name: "Ohio", 
-    population: 11536504
-  },
-  {
-    name: "Oklahoma", 
-    population: 3751351
-  },
-  {
-    name: "Oregon", 
-    population: 3831074
-  },
-  {
-    name: "Pennsylvania", 
-    population: 12702379
-  },
-  {
-    name: "Rhode Island", 
-    population: 1052567
-  },
-  {
-    name: "South Carolina", 
-    population: 4625364
-  },
-  {
-    name: "South Dakota", 
-    population: 814180
-  },
-  {
-    name: "Tennessee", 
-    population: 6346105
-  },
-  {
-    name: "Texas", 
-    population: 25145561
-  },
-  {
-    name: "Utah", 
-    population: 2763885
-  },
-  {
-    name: "Vermont", 
-    population: 625741
-  },
-  {
-    name: "Virginia", 
-    population: 8001024
-  },
-  {
-    name: "Washington", 
-    population: 6724540
-  },
-  {
-    name: "West Virginia", 
-    population: 1852994
-  },
-  {
-    name: "Wisconsin", 
-    population: 5686986
-  },
-  {
-    name: "Wyoming", 
-    population: 563626}
-]
+import topoStates from './states'
 
 class USMap extends Component {
   constructor() {
@@ -265,9 +60,7 @@ class USMap extends Component {
         })
       })
       .then(() => this.refreshScores())
-      .then(() => {
-        this.loadMap()
-      })
+      .then(() => this.loadMap())
   }
   getData() {
     const collegeYear = this.state.collegeData.find(entry => {
@@ -281,23 +74,32 @@ class USMap extends Component {
     return [collegeYear, censusYear]
   }
   loadMap() {
-    d3.json('https://cdn.jsdelivr.net/npm/us-atlas@2/us/states-10m.json')
-      .then(mapData => {
-        const geoDataObj = topojsonFeature(mapData, mapData.objects.states)
 
-        this.state.strengthScores.forEach(row => {
-          const states =  geoDataObj.features.filter(d => d.properties.name === row.name)
-          states.forEach(state => state.properties = row)
-        })
-        // testStateData.forEach(row => {
-        //   const states =  geoDataObj.features.filter(d => d.properties.name === row.name)
-        //   states.forEach(state => state.properties = row)
-        // })
-        this.displayMap(geoDataObj)
-      })
-      .catch(err => {
-        throw err
-      })
+    const geoDataObj = topojsonFeature(topoStates, topoStates.objects.states)
+
+    this.state.strengthScores.forEach(row => {
+      const states =  geoDataObj.features.filter(d => d.properties.name === row.name)
+      states.forEach(state => state.properties = row)
+    })
+    this.displayMap(geoDataObj)
+
+    // d3.json('https://cdn.jsdelivr.net/npm/us-atlas@2/us/states-10m.json')
+    //   .then(mapData => {
+    //     const geoDataObj = topojsonFeature(mapData, mapData.objects.states)
+
+    //     this.state.strengthScores.forEach(row => {
+    //       const states =  geoDataObj.features.filter(d => d.properties.name === row.name)
+    //       states.forEach(state => state.properties = row)
+    //     })
+    //     // testStateData.forEach(row => {
+    //     //   const states =  geoDataObj.features.filter(d => d.properties.name === row.name)
+    //     //   states.forEach(state => state.properties = row)
+    //     // })
+    //     this.displayMap(geoDataObj)
+    //   })
+    //   .catch(err => {
+    //     throw err
+    //   })
   }
   displayMap(geoDataObj) {
     const width = 720
@@ -318,10 +120,7 @@ class USMap extends Component {
           .classed('state', true)
           .attr('d', path)
 
-    setTimeout(() => {
-
-      this.setColor()
-    }, 1000)
+    this.setColor()
   }
   getScores(collegeYear, censusYear) {
     const strengthScores = []
@@ -347,17 +146,18 @@ class USMap extends Component {
   }
   async setColor () {
 
-    const colorRange = ['white', 'red']
-    const colorDomain = d3.extent(this.state.strengthScores.map(state => state.score))
+    // const colorRange = ['#c4e7fd', 'blue']
+    // const colorDomain = d3.extent(this.state.strengthScores.map(state => state.score))
     const scale = d3.scaleLinear()
-                    .domain([0.5, 2])
-                    .range(colorRange)
+                    .domain([0.5, 1, 4])
+                    .range(['red', '#FFFDE9', 'blue'])
 
     d3.selectAll('.state')
       .transition()
+      .duration(500)
       .style('fill', d => {
         const data = d.properties.score
-        return scale(data)
+        return data ? scale(data) : '#aaa'
       })
   }
   async refreshScores() {
@@ -366,14 +166,13 @@ class USMap extends Component {
     await this.setState({
       strengthScores: this.getScores(collegeYear, censusYear)
     })
-    console.log('recalculated')
+    this.loadMap()
   }
   handleChange = async e => {
     await this.setState({
       [e.target.name]: +e.target.value
     })
     await this.refreshScores()
-    this.setColor()
   }
   componentDidMount() {
     this.loadData()
