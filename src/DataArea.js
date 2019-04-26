@@ -5,8 +5,8 @@ const DataArea = props => {
     <section className="data-area">
       <h4>By the Numbers</h4>
       <ul>
-        <li>Electoral Votes:</li>
-        <li>Population:</li>
+        <li>Electoral Votes: <strong>538</strong></li>
+        <li>Population: <strong>360,000,000</strong></li>
       </ul>
     </section>
   )

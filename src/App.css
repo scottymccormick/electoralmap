@@ -95,3 +95,20 @@ datalist {
   list-style: none;
   padding-left: 0;
 }
+
+.data-area li {
+  padding: 5px 0;
+  text-justify: inter-word;
+}
+
+.education-section h2 {
+  color: red;
+}
+
+.education-section p {
+  margin: 30px auto;
+  max-width: 700px;
+  line-height: 1.5em;
+  font-size: 1.1em;
+  text-align: start;
+}
