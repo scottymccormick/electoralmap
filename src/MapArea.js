@@ -121,7 +121,7 @@ class MapArea extends Component {
   render() {
     console.log(this.state)
     return (
-      <div>
+      <div className="mapArea">
         <h3>US Map</h3>
         <YearPicker handleChange={this.handleChange} />
         <ColorScale />
