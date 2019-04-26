@@ -43,7 +43,7 @@ const CountryMap = props => {
     })
 
   return (
-    <div>
+    <div className="country-map">
       <svg 
         version="1.1"
         baseProfile="full"

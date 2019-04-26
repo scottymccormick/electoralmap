@@ -3,6 +3,7 @@ import * as d3 from 'd3'
 import YearPicker from './YearPicker';
 import CountryMap from './CountryMap';
 import ColorScale from './ColorScale';
+import DataArea from './DataArea';
 
 class MapArea extends Component {
   constructor() {
@@ -121,12 +122,15 @@ class MapArea extends Component {
   render() {
     console.log(this.state)
     return (
-      <div className="mapArea">
-        <h3>US Map</h3>
+      <section className="map-section">
+        <h3>{this.state.year}</h3>
         <YearPicker handleChange={this.handleChange} />
-        <ColorScale />
-        <CountryMap strengthScores={this.state.strengthScores}  />
-      </div>
+        <div className="map-area">
+          <ColorScale />
+          <CountryMap strengthScores={this.state.strengthScores}  />
+          <DataArea />
+        </div>
+      </section>
     )
   }
 }

@@ -25,10 +25,21 @@
   font-size: 1.2em;
 }
 
-.mapArea {
+.map-section {
   background-color: #eee;
   color: black;
-  padding: 10px 0;
+  padding: 10px 0 50px;
+}
+
+.map-area {
+  display: grid;
+  grid-template-columns: 10px 200px auto 200px 10px;
+  grid-template-rows: 5% auto 5%;
+}
+
+.country-map {
+  grid-column: 3 / span 1;
+  grid-row: 2 / span 1;
 }
 
 path {
@@ -52,23 +63,13 @@ datalist {
 }
 
 .color-scale-container {
-  position: relative;
-  top: 100px;
-  left: 100px;
-  width: 100px;
-}
-
-.color-scale-container h5 {
-  position: absolute;
-  top: -60px;
-  left: -40px;
-  font-size: 1em;
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+  width: 100%; 
 }
 
 .color-scale {
-  position: absolute;
-  left: 0;
-  right: 0;
+  margin: 0 auto;
   height: 200px;
   width: 20px;
   background: linear-gradient(red, #FFFDE9, blue)
@@ -83,4 +84,14 @@ datalist {
   margin-left: 30px;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.data-area {
+  grid-column: 4 / span 1;
+  grid-row: 2 / span 1;
+}
+
+.data-area ul {
+  list-style: none;
+  padding-left: 0;
 }

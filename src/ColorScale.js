@@ -3,7 +3,7 @@ import React from 'react'
 const ColorScale = props => {
   return (
     <div className="color-scale-container">
-      <h5>Vote Strength</h5>
+      <h4>Vote Strength</h4>
       <div className="color-scale">
         <ul>
           <li> &#60;0.5</li>
