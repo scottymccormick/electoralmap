@@ -7,7 +7,7 @@ const YearPicker = props => {
   }
   return (
     <section>
-      <input type="range" list="tickmarks" name="year" id="year-slider" onChange={props.handleChange} min="2000" max="2016" step="2" defaultValue="2016"/>
+      <input type="range" list="tickmarks" name="year" id="year-slider" className="slider" onChange={props.handleChange} min="2000" max="2016" step="2" defaultValue="2016"/>
       <datalist id="tickmarks">
         { years.map(year => {
           return <option value={year} label={year} key={year} />
