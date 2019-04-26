@@ -3,6 +3,7 @@ import './App.css';
 import MapArea from './MapArea';
 import Header from './Header';
 import Education from './Education';
+import Footer from './Footer';
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
         <Header />
         <MapArea />
         <Education />
+        <Footer />
       </div>
     );
   }
