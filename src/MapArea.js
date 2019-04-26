@@ -13,7 +13,9 @@ class MapArea extends Component {
       year: 2016,
       censusData: [],
       collegeData: [],
-      strengthScores: []
+      strengthScores: [],
+      popTotal: 0,
+      voteTotal: 0
     }
   }
   censusFormatter = row => {
@@ -128,7 +130,7 @@ class MapArea extends Component {
         <div className="map-area">
           <ColorScale />
           <CountryMap strengthScores={this.state.strengthScores}  />
-          <DataArea />
+          <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} />
         </div>
       </section>
     )
