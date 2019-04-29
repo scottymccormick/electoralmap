@@ -49,8 +49,12 @@ path {
   stroke-width: 0.25px;
 }
 
-.state {
-  fill: white;
+/* .state {
+  fill: none;
+} */
+
+.state-selected {
+  fill: purple;
 }
 
 #year-slider {
