@@ -81,7 +81,9 @@ class MapArea extends Component {
     })
 
     const censusYear = this.state.censusData.find(entry => {
-      return entry.year === this.state.year
+      return entry.year === this.state.year ||
+        entry.year === 1790 && this.state.year === 1788 || // edge case for 1790
+        (Math.abs(entry.year - this.state.year) < 10 && entry.year < this.state.year)
     })
     return [collegeYear, censusYear]
   }
