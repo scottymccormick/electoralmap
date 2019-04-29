@@ -135,7 +135,9 @@ class MapArea extends Component {
       [e.target.name]: +e.target.value
     })
     await this.refreshScores()
-    this.selectState()
+    if (this.state.selectedState) {
+      this.selectState()
+    }
   }
   componentDidMount() {
     this.loadData()
