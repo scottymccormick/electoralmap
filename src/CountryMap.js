@@ -47,6 +47,7 @@ const CountryMap = props => {
       const {name, score} = d.properties
       console.log('State', name)
       console.log('Score', score)
+      props.selectState(name)
     })
     .on('mouseover', function() {
       d3.select(this)

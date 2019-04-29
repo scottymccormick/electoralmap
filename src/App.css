@@ -107,6 +107,10 @@ datalist {
   text-justify: inter-word;
 }
 
+.state-data-area {
+  margin-top: 100px;
+}
+
 .education-section {
   background-color: #ca0100;
   padding: 30px 0 40px;

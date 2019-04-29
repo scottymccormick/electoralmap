@@ -15,7 +15,8 @@ class MapArea extends Component {
       collegeData: [],
       strengthScores: [],
       popTotal: 0,
-      voteTotal: 0
+      voteTotal: 0,
+      selectedState: null
     }
   }
   censusFormatter = row => {
@@ -114,11 +115,27 @@ class MapArea extends Component {
     }
     return strengthScores
   }
+  selectState = (name = this.state.selectedState.name) => {
+    const [ collegeYear, censusYear ] = this.getData()
+    const stateCensus = censusYear.states.find(state => state.name === name)
+    const stateCollege = collegeYear.states.find(state => state.name === name)
+    const stateStrength = this.state.strengthScores.find(state => state.name === name)
+    
+    this.setState({
+      selectedState: {
+        name,
+        population: stateCensus.population || 'No Data',
+        votes: stateCollege.votes,
+        strength: stateCollege.votes ? stateStrength.score : 'N/A'
+      }
+    })
+  }
   handleChange = async e => {
     await this.setState({
       [e.target.name]: +e.target.value
     })
     await this.refreshScores()
+    this.selectState()
   }
   componentDidMount() {
     this.loadData()
@@ -131,8 +148,8 @@ class MapArea extends Component {
         <YearPicker handleChange={this.handleChange} />
         <div className="map-area">
           <ColorScale />
-          <CountryMap strengthScores={this.state.strengthScores}  />
-          <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} />
+          <CountryMap strengthScores={this.state.strengthScores} selectState={this.selectState} />
+          <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} selectedState={this.state.selectedState} year={this.state.year} />
         </div>
       </section>
     )
