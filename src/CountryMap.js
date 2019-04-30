@@ -37,9 +37,25 @@ const CountryMap = props => {
   d3.selectAll('.state')
     .transition()
     .duration(500)
-    .style('fill', d => {
+    .attr('fill', d => {
       const data = d.properties.score
       return data ? scale(data) : '#aaa'
+    })
+    
+   d3.selectAll('.state')
+    .on('click', function(d, i) {
+      const {name, score} = d.properties
+      console.log('State', name)
+      console.log('Score', score)
+      props.selectState(name)
+    })
+    .on('mouseover', function() {
+      d3.select(this)
+        .classed('state-selected', true)
+    })
+    .on('mouseout', function() {
+      d3.select(this)
+        .classed('state-selected', false)
     })
 
   return (

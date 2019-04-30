@@ -13,7 +13,10 @@ class MapArea extends Component {
       year: 2016,
       censusData: [],
       collegeData: [],
-      strengthScores: []
+      strengthScores: [],
+      popTotal: 0,
+      voteTotal: 0,
+      selectedState: null
     }
   }
   censusFormatter = row => {
@@ -79,7 +82,9 @@ class MapArea extends Component {
     })
 
     const censusYear = this.state.censusData.find(entry => {
-      return entry.year === this.state.year
+      return entry.year === this.state.year ||
+        (entry.year === 1790 && this.state.year === 1788) || // edge case for 1790
+        (Math.abs(entry.year - this.state.year) < 10 && entry.year < this.state.year)
     })
     return [collegeYear, censusYear]
   }
@@ -110,11 +115,29 @@ class MapArea extends Component {
     }
     return strengthScores
   }
+  selectState = (name = this.state.selectedState.name) => {
+    const [ collegeYear, censusYear ] = this.getData()
+    const stateCensus = censusYear.states.find(state => state.name === name)
+    const stateCollege = collegeYear.states.find(state => state.name === name)
+    const stateStrength = this.state.strengthScores.find(state => state.name === name)
+    
+    this.setState({
+      selectedState: {
+        name,
+        population: stateCensus.population || 'No Data',
+        votes: stateCollege.votes,
+        strength: stateCollege.votes ? stateStrength.score : 'N/A'
+      }
+    })
+  }
   handleChange = async e => {
     await this.setState({
       [e.target.name]: +e.target.value
     })
     await this.refreshScores()
+    if (this.state.selectedState) {
+      this.selectState()
+    }
   }
   componentDidMount() {
     this.loadData()
@@ -127,8 +150,8 @@ class MapArea extends Component {
         <YearPicker handleChange={this.handleChange} />
         <div className="map-area">
           <ColorScale />
-          <CountryMap strengthScores={this.state.strengthScores}  />
-          <DataArea />
+          <CountryMap strengthScores={this.state.strengthScores} selectState={this.selectState} />
+          <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} selectedState={this.state.selectedState} year={this.state.year} />
         </div>
       </section>
     )

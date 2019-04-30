@@ -49,8 +49,12 @@ path {
   stroke-width: 0.25px;
 }
 
-.state {
-  fill: white;
+/* .state {
+  fill: none;
+} */
+
+.state-selected {
+  fill: purple;
 }
 
 #year-slider {
@@ -74,7 +78,7 @@ datalist {
   margin: 0 auto;
   height: 200px;
   width: 20px;
-  background: linear-gradient(red, #FFFDE9, blue)
+  background: linear-gradient(blue, #FFFDE9, red)
 }
 
 .color-scale ul {
@@ -101,6 +105,10 @@ datalist {
 .data-area li {
   padding: 5px 0;
   text-justify: inter-word;
+}
+
+.state-data-area {
+  margin-top: 100px;
 }
 
 .education-section {
