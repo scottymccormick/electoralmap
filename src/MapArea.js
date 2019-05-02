@@ -16,7 +16,9 @@ class MapArea extends Component {
       strengthScores: [],
       popTotal: 0,
       voteTotal: 0,
-      selectedState: null
+      selectedState: null,
+      showStateSection: false,
+      stateSectionClass: 'state-section'
     }
   }
   censusFormatter = row => {
@@ -141,6 +143,17 @@ class MapArea extends Component {
   }
   stateBtnClick = e => {
     console.log('Clicked on state btn')
+    
+    this.setState({ 
+      showStateSection: true,
+      stateSectionClass: 'state-section active-state-section'
+    })
+  }
+  closeStateBtn = () => {
+    this.setState({ 
+      showStateSection: false,
+      stateSectionClass: 'state-section'
+    })
   }
   componentDidMount() {
     this.loadData()
@@ -148,6 +161,7 @@ class MapArea extends Component {
   render() {
     console.log(this.state)
     return (
+      <div>
       <section className="map-section">
         <h3>{this.state.year}</h3>
         <YearPicker handleChange={this.handleChange} />
@@ -157,6 +171,17 @@ class MapArea extends Component {
           <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} selectedState={this.state.selectedState} year={this.state.year} stateBtnClick={this.stateBtnClick} />
         </div>
       </section>
+        <section className={this.state.stateSectionClass}>
+      { this.state.showStateSection ?
+          (
+            <div>
+              <h3>{this.state.selectedState.name}</h3>
+              <button className="close-state-section-btn" onClick={this.closeStateBtn}>Close State Section</button>
+            </div>
+          )
+          : null}
+        </section>
+      </div>
     )
   }
 }
