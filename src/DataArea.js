@@ -18,8 +18,13 @@ const DataArea = props => {
             <li>Strength Score: <strong>{
                 isNaN(props.selectedState.strength) ? props.selectedState.strength : props.selectedState.strength.toFixed(2)}</strong></li>
           </ul>
+          <button className="state-analysis-btn" onClick={props.stateBtnClick}>View State Analysis</button>
         </div>
-        : null}
+        : 
+        <div className="state-data-announcement">
+          <h4>Select a state to see additional details</h4>
+        </div>
+          }
     </section>
   )
 }

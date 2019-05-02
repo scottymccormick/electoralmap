@@ -109,8 +109,28 @@ datalist {
   text-justify: inter-word;
 }
 
-.state-data-area {
+.state-data-area, .state-data-announcement {
   margin-top: 100px;
+  border: 1px dotted black;
+  border-radius: 5px;
+}
+
+.state-analysis-btn {
+  padding: 5px;
+  margin: 5px 0 10px;
+  border-radius: 5px;
+  background-color: #0000ff;
+  color: white;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.state-analysis-btn:hover {
+  background-color: #0000d6;
+}
+
+.state-analysis-btn:focus {
+  outline: none;
 }
 
 .education-section {

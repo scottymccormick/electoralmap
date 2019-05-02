@@ -139,6 +139,9 @@ class MapArea extends Component {
       this.selectState()
     }
   }
+  stateBtnClick = e => {
+    console.log('Clicked on state btn')
+  }
   componentDidMount() {
     this.loadData()
   }
@@ -151,7 +154,7 @@ class MapArea extends Component {
         <div className="map-area">
           <ColorScale />
           <CountryMap strengthScores={this.state.strengthScores} selectState={this.selectState} />
-          <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} selectedState={this.state.selectedState} year={this.state.year} />
+          <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} selectedState={this.state.selectedState} year={this.state.year} stateBtnClick={this.stateBtnClick} />
         </div>
       </section>
     )
