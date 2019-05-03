@@ -135,13 +135,12 @@ datalist {
 
 .state-section {
   max-height: 0;
-  transition: max-height 1s ease-in-out;
-  overflow: hidden;
-  height: auto;
 }
 
-.active-state-section {
-  max-height: 500px;
+.state-section.state-section-open {
+  overflow: hidden;
+  max-height: 700px;
+  transition: all 1s ease-in-out;
 }
 
 .close-state-section-btn {
@@ -152,6 +151,10 @@ datalist {
   color: #111;
   font-size: 0.9em;
   font-weight: bold;
+}
+
+.close-state-section-btn:hover {
+  background-color: #ddd;
 }
 
 .education-section {

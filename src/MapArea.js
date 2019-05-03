@@ -4,6 +4,7 @@ import YearPicker from './YearPicker';
 import CountryMap from './CountryMap';
 import ColorScale from './ColorScale';
 import DataArea from './DataArea';
+import StateArea from './StateArea';
 
 class MapArea extends Component {
   constructor() {
@@ -146,7 +147,7 @@ class MapArea extends Component {
     
     this.setState({ 
       showStateSection: true,
-      stateSectionClass: 'state-section active-state-section'
+      stateSectionClass: 'state-section state-section-open'
     })
   }
   closeStateBtn = () => {
@@ -173,12 +174,7 @@ class MapArea extends Component {
       </section>
         <section className={this.state.stateSectionClass}>
       { this.state.showStateSection ?
-          (
-            <div>
-              <h3>{this.state.selectedState.name}</h3>
-              <button className="close-state-section-btn" onClick={this.closeStateBtn}>Close State Section</button>
-            </div>
-          )
+          <StateArea closeStateBtn={this.closeStateBtn} selectedState={this.state.selectedState} />
           : null}
         </section>
       </div>
