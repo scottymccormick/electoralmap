@@ -174,7 +174,7 @@ class MapArea extends Component {
       </section>
         <section className={this.state.stateSectionClass}>
       { this.state.showStateSection ?
-          <StateArea closeStateBtn={this.closeStateBtn} selectedState={this.state.selectedState} />
+          <StateArea closeStateBtn={this.closeStateBtn} selectedState={this.state.selectedState} collegeData={this.state.collegeData} censusData={this.state.censusData} popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} />
           : null}
         </section>
       </div>
