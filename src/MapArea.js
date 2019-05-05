@@ -160,7 +160,6 @@ class MapArea extends Component {
     this.loadData()
   }
   render() {
-    console.log(this.state)
     return (
       <div>
       <section className="map-section">

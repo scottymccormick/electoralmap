@@ -36,7 +36,7 @@ const CountryMap = props => {
 
   d3.selectAll('.state')
     .transition()
-    .duration(500)
+    .duration(200)
     .attr('fill', d => {
       const data = d.properties.score
       return data ? scale(data) : '#aaa'
