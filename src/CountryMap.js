@@ -20,7 +20,7 @@ const CountryMap = props => {
 
   const path = d3.geoPath().projection(projection)
 
-  d3.select('svg')
+  d3.select('#countrySvg')
         .attr('width', width)
         .attr('height', height)
       .selectAll('.state')
@@ -44,23 +44,27 @@ const CountryMap = props => {
     
    d3.selectAll('.state')
     .on('click', function(d, i) {
-      const {name, score} = d.properties
-      console.log('State', name)
-      console.log('Score', score)
+      const { name } = d.properties
       props.selectState(name)
-    })
-    .on('mouseover', function() {
+
+      d3.selectAll('.state')
+        .classed('state-selected', false)
       d3.select(this)
         .classed('state-selected', true)
     })
+    .on('mouseover', function() {
+      d3.select(this)
+        .classed('state-hover', true)
+    })
     .on('mouseout', function() {
       d3.select(this)
-        .classed('state-selected', false)
+        .classed('state-hover', false)
     })
 
   return (
     <div className="country-map">
       <svg 
+        id="countrySvg"
         version="1.1"
         baseProfile="full"
         xmlns="http://www.w3.org/2000/svg"></svg>

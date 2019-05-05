@@ -4,6 +4,7 @@ import YearPicker from './YearPicker';
 import CountryMap from './CountryMap';
 import ColorScale from './ColorScale';
 import DataArea from './DataArea';
+import StateArea from './StateArea';
 
 class MapArea extends Component {
   constructor() {
@@ -16,7 +17,9 @@ class MapArea extends Component {
       strengthScores: [],
       popTotal: 0,
       voteTotal: 0,
-      selectedState: null
+      selectedState: null,
+      showStateSection: false,
+      stateSectionClass: 'state-section'
     }
   }
   censusFormatter = row => {
@@ -139,21 +142,42 @@ class MapArea extends Component {
       this.selectState()
     }
   }
+  stateBtnClick = e => {
+    console.log('Clicked on state btn')
+    
+    this.setState({ 
+      showStateSection: true,
+      stateSectionClass: 'state-section state-section-open'
+    })
+  }
+  closeStateBtn = () => {
+    this.setState({ 
+      showStateSection: false,
+      stateSectionClass: 'state-section'
+    })
+  }
   componentDidMount() {
     this.loadData()
   }
   render() {
     console.log(this.state)
     return (
+      <div>
       <section className="map-section">
         <h3>{this.state.year}</h3>
         <YearPicker handleChange={this.handleChange} />
         <div className="map-area">
           <ColorScale />
           <CountryMap strengthScores={this.state.strengthScores} selectState={this.selectState} />
-          <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} selectedState={this.state.selectedState} year={this.state.year} />
+          <DataArea popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} selectedState={this.state.selectedState} year={this.state.year} stateBtnClick={this.stateBtnClick} />
         </div>
       </section>
+        <section className={this.state.stateSectionClass}>
+      { this.state.showStateSection ?
+          <StateArea closeStateBtn={this.closeStateBtn} selectedState={this.state.selectedState} collegeData={this.state.collegeData} censusData={this.state.censusData} popTotal={this.state.popTotal} voteTotal={this.state.voteTotal} />
+          : null}
+        </section>
+      </div>
     )
   }
 }

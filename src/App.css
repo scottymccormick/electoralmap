@@ -49,12 +49,14 @@ path {
   stroke-width: 0.25px;
 }
 
-/* .state {
-  fill: none;
-} */
+.state-hover {
+  stroke-opacity: 0.9;
+  stroke-width: 1;
+}
 
 .state-selected {
-  fill: purple;
+  stroke-opacity: 0.7;
+  stroke-width: 2;
 }
 
 #year-slider {
@@ -107,8 +109,57 @@ datalist {
   text-justify: inter-word;
 }
 
-.state-data-area {
+.state-data-area, .state-data-announcement {
   margin-top: 100px;
+  border: 1px dotted black;
+  border-radius: 5px;
+}
+
+.state-analysis-btn {
+  padding: 5px;
+  margin: 5px 0 10px;
+  border-radius: 5px;
+  background-color: #0000ff;
+  color: white;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.state-analysis-btn:hover {
+  background-color: #0000d6;
+}
+
+.state-analysis-btn:focus {
+  outline: none;
+}
+
+.state-section {
+  max-height: 0;
+}
+
+.state-section.state-section-open {
+  overflow: hidden;
+  max-height: 700px;
+  transition: all 1s ease-in-out;
+}
+
+.close-state-section-btn {
+  padding: 5px;
+  margin: 15px 0 25px;
+  border-radius: 5px;
+  background-color: white;
+  color: #111;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.close-state-section-btn:hover {
+  background-color: #ddd;
+}
+
+#stateSvg path {
+  fill: none;
+  stroke: #fff;
 }
 
 .education-section {
