@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import * as d3 from 'd3'
 
 class StateArea extends Component {
   constructor() {
@@ -48,35 +49,84 @@ class StateArea extends Component {
     }
     return scores
   }
-  calculateScores () {
+  calculateScores = async () => {
     const [stateCensus, stateVotes] = this.getStateData()
     const strengthScores = this.getStrengthScores(stateCensus, stateVotes)
-    this.setState({
+    await this.setState({
       strengthScores
     })
+    this.constructSvg()
+  }
+  constructSvg() {
+
+    const x = d3.scaleTime()
+      .range([0, 600])
+      .domain(d3.extent(this.state.strengthScores, function(d) {
+        return d.year
+      }))
+    const y = d3.scaleLinear()
+      .range([90, 0])
+      .domain(d3.extent(this.state.strengthScores, function(d) {
+        return d.score
+      }))
+
+    const lineGenerator = d3.line()
+        .x(function(d) { return x(d.year)})
+        .y(function(d) { return y(d.score)})
+  
+    const pathData = lineGenerator(this.state.strengthScores)
+
+    const svg = d3.select("#stateSvg")
+      .append("g")
+      .attr("transform", "translate(30, 30)");
+
+    d3.select('#stateSvg path')
+      .attr('d', pathData)
+
+    // Add the X Axis
+    svg.append("g")
+      .attr("transform", "translate(0," + 100 + ")")
+      .call(d3.axisBottom(x));
+
+    // Add the Y Axis
+    svg.append("g")
+      .call(d3.axisLeft(y));
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.selectedState.name !== this.props.selectedState.name) {
-      this.calculateScores()  
+      this.calculateScores()
+      // this.constructSvg()
     }
   }
   componentDidMount() {
     this.calculateScores()
   }
   render() {
-    console.log(this.state)
     return (
       <div>
         <h3>{this.props.selectedState.name}</h3>
         <button className="close-state-section-btn" onClick={this.props.closeStateBtn}>Close State Section</button>
         {this.state.strengthScores.length > 0 ? 
-          this.state.strengthScores.map(entry => {
-            return (
-              <div key={entry.year}>
-                <p>Year: {entry.year} Score: {entry.score}</p>
-              </div>
-            )
-          })
+          <div>
+            <svg 
+              id="stateSvg"
+              width="700"
+              height="210"
+              version="1.1"
+              baseProfile="full"
+              xmlns="http://www.w3.org/2000/svg">
+              <path></path>
+            </svg>
+
+            {this.state.strengthScores.map(entry => {
+              return (
+                <div key={entry.year}>
+                  <p>Year: {entry.year} Score: {entry.score}</p>
+                </div>
+              )
+            })}
+          </div>
+          
           : null }
       </div>
     )

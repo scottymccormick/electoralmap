@@ -20,7 +20,7 @@ const CountryMap = props => {
 
   const path = d3.geoPath().projection(projection)
 
-  d3.select('svg')
+  d3.select('#countrySvg')
         .attr('width', width)
         .attr('height', height)
       .selectAll('.state')
@@ -64,6 +64,7 @@ const CountryMap = props => {
   return (
     <div className="country-map">
       <svg 
+        id="countrySvg"
         version="1.1"
         baseProfile="full"
         xmlns="http://www.w3.org/2000/svg"></svg>

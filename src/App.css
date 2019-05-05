@@ -157,6 +157,11 @@ datalist {
   background-color: #ddd;
 }
 
+#stateSvg path {
+  fill: none;
+  stroke: #fff;
+}
+
 .education-section {
   background-color: #ca0100;
   padding: 30px 0 40px;
