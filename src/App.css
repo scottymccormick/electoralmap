@@ -182,7 +182,7 @@ datalist {
 }
 
 .references-list {
-  padding-top: 50px;
+  padding-top: 10px;
 } 
 
 .references-list ul {
@@ -191,6 +191,7 @@ datalist {
 
 .references-list a {
   text-decoration: none;
+  color: #eee;
 }
 
 .footer-section p {
