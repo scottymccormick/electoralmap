@@ -150,7 +150,7 @@ class StateArea extends Component {
   render() {
     return (
       <div>
-        <h3>{this.props.selectedState.name}</h3>
+        <h3>{this.props.selectedState.name} - State Analysis (Beta)</h3>
         <button className="close-state-section-btn" onClick={this.props.closeStateBtn}>Close State Section</button>
         {this.state.strengthScores.length > 0 ? 
           <div id="stateSvgContainer">
