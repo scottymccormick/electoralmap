@@ -158,9 +158,16 @@ datalist {
   background-color: #ddd;
 }
 
+#stateSvgContainer {
+  max-width: 700px;
+  max-height: 300px;
+  margin: 0 auto;
+}
+
 #stateSvg path {
   fill: none;
   stroke: #fff;
+  stroke-width: 1px;
 }
 
 .education-section {
