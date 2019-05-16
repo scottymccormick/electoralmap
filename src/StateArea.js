@@ -104,13 +104,13 @@ class StateArea extends Component {
       .range([0, width])
     
     const yScale = d3.scaleLinear()
-      .domain(d3.extent(filteredData, function(d) {
+      .domain([0, d3.extent(filteredData, function(d) {
         return d.score
-      }))
+      })[1]])
       .range([height, 0])
 
     const lineGenerator = d3.line()
-        .x(function(d, i) { return xScale(d.year)})
+        .x(function(d) { return xScale(d.year)})
         .y(function(d) { return yScale(d.score)})
   
     const pathData = lineGenerator(filteredData)
@@ -128,9 +128,11 @@ class StateArea extends Component {
       .call(xAxis);
     
     // Add the Y Axis
+    const yAxis = d3.axisLeft(yScale)
+
     svg.append("g")
       .attr('class', 'y axis')
-      .call(d3.axisLeft(yScale));
+      .call(yAxis);
 
     svg.append('path')
       .attr('class', 'line')
