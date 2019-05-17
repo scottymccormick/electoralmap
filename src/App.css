@@ -170,6 +170,10 @@ datalist {
   stroke-width: 1px;
 }
 
+.dotted-path {
+  stroke-dasharray: 2;
+}
+
 .education-section {
   background-color: #ca0100;
   padding: 30px 0 40px;

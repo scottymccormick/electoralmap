@@ -137,6 +137,19 @@ class StateArea extends Component {
     svg.append('path')
       .attr('class', 'line')
       .attr('d', pathData)
+
+    // add line at 1.0
+
+    const flatLineGenerator = d3.line()
+        .x(function(d) { return xScale(d.year)})
+        .y(function(d) { return yScale(1) })
+
+    const flatLinePath = flatLineGenerator(filteredData)
+
+    svg.append('path')
+      .classed('dotted-path', true)
+      .attr('d', flatLinePath)
+
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.selectedState.name !== this.props.selectedState.name) {
