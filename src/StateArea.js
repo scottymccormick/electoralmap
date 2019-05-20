@@ -186,7 +186,6 @@ class StateArea extends Component {
     return (
       <div>
         <h3>State Analysis: {this.props.selectedState.name}</h3>
-        <button className="close-state-section-btn" onClick={this.props.closeStateBtn}>Close State Section</button>
         {this.state.strengthScores.length > 0 ? 
           <div id="stateSvgContainer">
             <svg 
@@ -196,17 +195,9 @@ class StateArea extends Component {
               xmlns="http://www.w3.org/2000/svg">
               <path></path>
             </svg>
-
-            {this.state.strengthScores.map(entry => {
-              return (
-                <div key={entry.year}>
-                  <p>Year: {entry.year} Score: {entry.score}</p>
-                </div>
-              )
-            })}
           </div>
-          
           : null }
+          <button className="close-state-section-btn" onClick={this.props.closeStateBtn}>Close</button>
       </div>
     )
   }
