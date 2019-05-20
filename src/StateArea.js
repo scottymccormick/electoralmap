@@ -103,15 +103,18 @@ class StateArea extends Component {
       }))
       .range([0, width])
     
+    const maxY = d3.extent(filteredData, function(d) {
+      return d.score
+    })[1]
+
     const yScale = d3.scaleLinear()
-      .domain([0, d3.extent(filteredData, function(d) {
-        return d.score
-      })[1]])
+      .domain([0, maxY > 2 ? maxY + 0.5 : 2])
       .range([height, 0])
 
     const lineGenerator = d3.line()
         .x(function(d) { return xScale(d.year)})
         .y(function(d) { return yScale(d.score)})
+        .curve(d3.curveMonotoneX)
   
     const pathData = lineGenerator(filteredData)
     
