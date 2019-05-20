@@ -87,7 +87,7 @@ class StateArea extends Component {
   }
   constructSvg() {
 
-    const margin = {top: 30, right: 30, bottom: 30, left: 30}
+    const margin = {top: 30, right: 30, bottom: 40, left: 50}
     const width = 700 - margin.left - margin.right
     const height = 300 - margin.top - margin.bottom
 
@@ -129,6 +129,15 @@ class StateArea extends Component {
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
+
+    // X Axis label
+    svg.append("text")
+      .attr("transform", 
+            "translate(" + (width / 2) + ", " +
+            (height + margin.bottom) + ")")
+      .style("text-anchor", "middle")
+      .style("fill", "white")
+      .text("Year")
     
     // Add the Y Axis
     const yAxis = d3.axisLeft(yScale)
@@ -136,6 +145,16 @@ class StateArea extends Component {
     svg.append("g")
       .attr('class', 'y axis')
       .call(yAxis);
+
+    // Y Axis label
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - (height / 2))
+      .attr("dy", "15px")
+      .style("fill", "white")
+      .style("text-anchor", "middle")
+      .text("Score")
 
     svg.append('path')
       .attr('class', 'line')
@@ -166,7 +185,7 @@ class StateArea extends Component {
   render() {
     return (
       <div>
-        <h3>{this.props.selectedState.name} - State Analysis (Beta)</h3>
+        <h3>State Analysis: {this.props.selectedState.name}</h3>
         <button className="close-state-section-btn" onClick={this.props.closeStateBtn}>Close State Section</button>
         {this.state.strengthScores.length > 0 ? 
           <div id="stateSvgContainer">
