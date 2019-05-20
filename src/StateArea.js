@@ -87,7 +87,7 @@ class StateArea extends Component {
   }
   constructSvg() {
 
-    const margin = {top: 30, right: 30, bottom: 30, left: 30}
+    const margin = {top: 30, right: 30, bottom: 40, left: 50}
     const width = 700 - margin.left - margin.right
     const height = 300 - margin.top - margin.bottom
 
@@ -103,15 +103,18 @@ class StateArea extends Component {
       }))
       .range([0, width])
     
+    const maxY = d3.extent(filteredData, function(d) {
+      return d.score
+    })[1]
+
     const yScale = d3.scaleLinear()
-      .domain([0, d3.extent(filteredData, function(d) {
-        return d.score
-      })[1]])
+      .domain([0, maxY > 2 ? maxY + 0.5 : 2])
       .range([height, 0])
 
     const lineGenerator = d3.line()
         .x(function(d) { return xScale(d.year)})
         .y(function(d) { return yScale(d.score)})
+        .curve(d3.curveMonotoneX)
   
     const pathData = lineGenerator(filteredData)
     
@@ -126,6 +129,15 @@ class StateArea extends Component {
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
+
+    // X Axis label
+    svg.append("text")
+      .attr("transform", 
+            "translate(" + (width / 2) + ", " +
+            (height + margin.bottom) + ")")
+      .style("text-anchor", "middle")
+      .style("fill", "white")
+      .text("Year")
     
     // Add the Y Axis
     const yAxis = d3.axisLeft(yScale)
@@ -134,9 +146,32 @@ class StateArea extends Component {
       .attr('class', 'y axis')
       .call(yAxis);
 
+    // Y Axis label
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - (height / 2))
+      .attr("dy", "15px")
+      .style("fill", "white")
+      .style("text-anchor", "middle")
+      .text("Score")
+
     svg.append('path')
       .attr('class', 'line')
       .attr('d', pathData)
+
+    // add line at 1.0
+
+    const flatLineGenerator = d3.line()
+        .x(function(d) { return xScale(d.year)})
+        .y(function(d) { return yScale(1) })
+
+    const flatLinePath = flatLineGenerator(filteredData)
+
+    svg.append('path')
+      .classed('dotted-path', true)
+      .attr('d', flatLinePath)
+
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.selectedState.name !== this.props.selectedState.name) {
@@ -150,8 +185,7 @@ class StateArea extends Component {
   render() {
     return (
       <div>
-        <h3>{this.props.selectedState.name} - State Analysis (Beta)</h3>
-        <button className="close-state-section-btn" onClick={this.props.closeStateBtn}>Close State Section</button>
+        <h3>State Analysis: {this.props.selectedState.name}</h3>
         {this.state.strengthScores.length > 0 ? 
           <div id="stateSvgContainer">
             <svg 
@@ -161,17 +195,9 @@ class StateArea extends Component {
               xmlns="http://www.w3.org/2000/svg">
               <path></path>
             </svg>
-
-            {this.state.strengthScores.map(entry => {
-              return (
-                <div key={entry.year}>
-                  <p>Year: {entry.year} Score: {entry.score}</p>
-                </div>
-              )
-            })}
           </div>
-          
           : null }
+          <button className="close-state-section-btn" onClick={this.props.closeStateBtn}>Close</button>
       </div>
     )
   }

@@ -142,11 +142,16 @@ datalist {
   overflow: hidden;
   max-height: 700px;
   transition: all 1s ease-in-out;
+  margin: 20px 0;
+}
+
+.state-section h3 {
+  letter-spacing: 1.1px;
 }
 
 .close-state-section-btn {
   padding: 5px;
-  margin: 15px 0 25px;
+  margin: 30px 20px 10px 40px;
   border-radius: 5px;
   background-color: white;
   color: #111;
@@ -168,6 +173,10 @@ datalist {
   fill: none;
   stroke: #fff;
   stroke-width: 1px;
+}
+
+.dotted-path {
+  stroke-dasharray: 2;
 }
 
 .education-section {
@@ -193,7 +202,8 @@ datalist {
 } 
 
 .references-list ul {
-  list-style-type: square;
+  list-style-type: none;
+  padding-left: 0;
   max-width: 700px;
   margin: 0 auto;
 }
